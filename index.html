@@ -1,1 +1,70 @@
-<h1>Hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokéTCG Translator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-sm">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Card informations</h1>
+        <form id="pokemon-card-form">
+            <!-- Champ SET -->
+            <div class="mb-4">
+                <label for="set" class="block text-gray-700 font-medium mb-2">SET (ex: sv2a)</label>
+                <input type="text" id="set" name="set" 
+                       class="w-full px-4 py-2 border rounded-lg text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                       placeholder="Entrez le SET de la carte" required>
+            </div>
+
+            <!-- Champ ID -->
+            <div class="mb-4">
+                <label for="id" class="block text-gray-700 font-medium mb-2">ID (ex: 125)</label>
+                <input type="text" id="id" name="id" 
+                       class="w-full px-4 py-2 border rounded-lg text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
+                       placeholder="Entrez l'ID de la carte" required>
+            </div>
+
+            <!-- Bouton de Validation -->
+            <button type="submit" 
+                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                Submit
+            </button>
+        </form>
+
+        <!-- Conteneur pour les informations de la carte -->
+        <div id="card-info" class="mt-6 hidden">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Informations de la Carte</h2>
+            <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+                <p class="text-gray-700"><strong>SET :</strong> <span id="display-set"></span></p>
+                <p class="text-gray-700"><strong>ID :</strong> <span id="display-id"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('pokemon-card-form');
+        const cardInfoContainer = document.getElementById('card-info');
+        const displaySet = document.getElementById('display-set');
+        const displayId = document.getElementById('display-id');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); // Empêche le rechargement de la page
+            
+            // Récupération des valeurs des champs
+            const set = document.getElementById('set').value;
+            const id = document.getElementById('id').value;
+
+            // Affiche les informations dans le conteneur
+            displaySet.textContent = set;
+            displayId.textContent = id;
+
+            // Montre le conteneur des informations
+            cardInfoContainer.classList.remove('hidden');
+        });
+    </script>
+
+</body>
+</html>
