@@ -5,26 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokéTCG Translator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./index.js"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
     <div class="bg-white shadow-md rounded-lg p-6 w-full max-w-sm">
-        <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Card informations</h1>
+        <img src="./assets/logo.png" alt="" srcset="">
+        <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Translator</h1>
         <form id="pokemon-card-form">
+            
+            <label for="lang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Translate to</label>
+            <select id="lang" class="mb-4 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+            </select>
+
             <!-- Champ SET -->
             <div class="mb-4">
-                <label for="set" class="block text-gray-700 font-medium mb-2">SET (ex: sv2a)</label>
+                <label for="set" class="block text-gray-700 font-medium mb-2">Set</label>
                 <input type="text" id="set" name="set" 
                        class="w-full px-4 py-2 border rounded-lg text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                       placeholder="Entrez le SET de la carte" required>
+                       placeholder="ex: sv2a" required>
             </div>
 
             <!-- Champ ID -->
             <div class="mb-4">
-                <label for="id" class="block text-gray-700 font-medium mb-2">ID (ex: 125)</label>
+                <label for="id" class="block text-gray-700 font-medium mb-2">ID</label>
                 <input type="text" id="id" name="id" 
                        class="w-full px-4 py-2 border rounded-lg text-gray-800 focus:ring-2 focus:ring-blue-500 focus:outline-none" 
-                       placeholder="Entrez l'ID de la carte" required>
+                       placeholder="ex: 025" required>
             </div>
 
             <!-- Bouton de Validation -->
@@ -36,33 +45,20 @@
 
         <!-- Conteneur pour les informations de la carte -->
         <div id="card-info" class="mt-6 hidden">
-            <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Informations de la Carte</h2>
-            <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
-                <p class="text-gray-700"><strong>SET :</strong> <span id="display-set"></span></p>
-                <p class="text-gray-700"><strong>ID :</strong> <span id="display-id"></span></p>
-            </div>
+            <div id="card-error"></div>
+            <h2 class="text-xl font-bold text-gray-800 mb-4 text-center" id="card-name"></h2>
+            <!-- <div class="bg-gray-50 p-4 rounded-lg shadow-inner" id="atk"></div> -->
+            <div id="atk" class="bg-white p-4 rounded-lg shadow-md">
+            </div>            
         </div>
     </div>
 
     <script>
         const form = document.getElementById('pokemon-card-form');
-        const cardInfoContainer = document.getElementById('card-info');
-        const displaySet = document.getElementById('display-set');
-        const displayId = document.getElementById('display-id');
-
         form.addEventListener('submit', (e) => {
-            e.preventDefault(); // Empêche le rechargement de la page
-            
-            // Récupération des valeurs des champs
-            const set = document.getElementById('set').value;
-            const id = document.getElementById('id').value;
-
-            // Affiche les informations dans le conteneur
-            displaySet.textContent = set;
-            displayId.textContent = id;
-
-            // Montre le conteneur des informations
-            cardInfoContainer.classList.remove('hidden');
+            e.preventDefault();
+            document.getElementById('card-info').classList.remove('hidden');
+            load(document.getElementById('set').value, document.getElementById('id').value)
         });
     </script>
 
